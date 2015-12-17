@@ -11,6 +11,6 @@ public:
 	SetPoints ( const SetPoints & set);
 
 	TPoint operator[] (int i);
-	//TPoint operator= ( const SetPoints & set );
+	SetPoints operator= ( const SetPoints & set );
 
 };

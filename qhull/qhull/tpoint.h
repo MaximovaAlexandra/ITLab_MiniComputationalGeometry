@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 using namespace std;
 class TPoint
 {
@@ -10,20 +9,22 @@ public:
 	double Y;
 
 	TPoint( double a=0, double b=0 );
-
+    TPoint( const TPoint & p );
 
 	TPoint operator +(TPoint &);
+    TPoint operator =(const TPoint &  );
 	TPoint operator -(TPoint &);
-	int operator< (TPoint &);
-	int operator> (TPoint &);
+	bool operator< (TPoint &);
+	bool operator> (TPoint &);
 	double operator [] (int);
-	int operator == (TPoint &);
-	int operator != (TPoint &);
+	
+	 bool operator == (const TPoint ) const;
+	 bool operator != (const TPoint ) const;
 
-	int CheckPoint(TPoint a, TPoint b, TPoint c); //  Оппредеение положения точки b относительно вектора ac
+	double CheckPoint(TPoint a, TPoint b, TPoint c); //  Опредеение положения точки b относительно вектора ac
 	double length();
 
-	double VectorMult(TPoint  i,  TPoint& j,  TPoint k); // Векторное произведение
+	double VectorMult(TPoint  i,  TPoint j,  TPoint k); // Векторное произведение
 };
 
 

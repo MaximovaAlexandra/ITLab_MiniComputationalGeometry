@@ -6,6 +6,12 @@ TPoint :: TPoint (double x, double y)
 	Y=y;
 }
 
+ TPoint :: TPoint( const TPoint & p )
+ {
+	 X = p.X;
+	 Y = p.Y;
+ }
+
 TPoint TPoint :: operator+( TPoint &m)
 {
 	X+= m.X;
@@ -20,15 +26,17 @@ TPoint TPoint :: operator-( TPoint &m)
 	return (*this);
 }
 
-int TPoint :: operator >( TPoint &m)
+bool TPoint :: operator >( TPoint &m)
 { 
-	return ( (X > m.X) || ((X == m.X) && (Y > m.Y)) );
+	if ( (X > m.X) || ((X == m.X) && (Y > m.Y)) ) return true;
+	else return false;
 }
 
 
-int TPoint :: operator < ( TPoint &m)
+bool TPoint :: operator < ( TPoint &m)
 { 
-	return ( (X < m.X) || ((X == m.X) && (Y < m.Y)) );
+	if ( (X < m.X) || ((X == m.X) && (Y < m.Y)) ) return true;
+	else return false;
 }
 
 double TPoint :: length()
@@ -37,7 +45,7 @@ double TPoint :: length()
 }
 
 
-int TPoint :: CheckPoint(TPoint a, TPoint b, TPoint c)   // Возвращаемый результат 0 - точка b лежит на прямой, >0 - выше, <0 - ниже
+double TPoint :: CheckPoint(TPoint a, TPoint b, TPoint c)   // Возвращаемый результат 0 - точка b лежит на прямой, >0 - выше, <0 - ниже
  {
 	 /// Это неверно: например, если в результате будет 0.7, то при приведении к int оно станет 0
 	 /// Нужно честно взять знак
@@ -48,21 +56,32 @@ int TPoint :: CheckPoint(TPoint a, TPoint b, TPoint c)   // Возвращаемый результ
  double TPoint ::operator [] (int i)
 {
 	if ( i == 0 )  return X;
-	else  if ( i==1 ) return Y;
+	else  
+		if ( i==1 ) return Y;
+		else throw i;
 }
 
+ TPoint TPoint:: operator= ( const TPoint  &p )
+ {
+	 X = p.X;
+	 Y = p.Y;
+	 return ( *this);
+ }
 
-int TPoint ::operator == (TPoint &m)
+
+bool TPoint :: operator == ( const TPoint m) const
 {
-	return ( (X==m.X) && (Y==m.Y) );
+	if ( (X==m.X) && (Y==m.Y) ) return true;
+	else return false;
 }
 
-int TPoint ::operator != (TPoint &m)
+ bool TPoint ::operator != ( const TPoint m) const
 {
-	return ( (X!=m.X) || (X!=m.Y) );
+	if ( (X!=m.X) || (Y!=m.Y) ) return true;
+	else return false;
 }
 
-double TPoint  :: VectorMult (TPoint  i,  TPoint& j, TPoint k ) // Векторное произведение [i,j,k]
+double TPoint  :: VectorMult (TPoint  i,  TPoint j, TPoint k ) // Векторное произведение [i,j,k]
 { 
 	// считаем определитель [i, j, k]  
 	return ( i[0] * j[1] + k[0] * i[1] + j[0] * k[1] - k[0] * j[1] - i[0] * k[1] - j[0] * i[1] ); 

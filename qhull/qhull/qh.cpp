@@ -2,12 +2,11 @@
 #include "math.h"
 
 
-ConvexHull :: ConvexHull (int _HullSize)
+ConvexHull :: ConvexHull (SetPoints &a)
 {
-	HullSize =_HullSize;
-	TPoint temp(0,0);
+	HullSize = a.Size;
 	for ( int i=0; i < HullSize; i++)
-		hull[i] = temp;
+		hull[i] = a[i];
 }
 
 ConvexHull :: ConvexHull ( const ConvexHull &h) 
@@ -21,11 +20,10 @@ TPoint ConvexHull :: operator[] (int i)
 	return hull[i];
 }
 
-
 TPoint ConvexHull:: right () // сама€ права€ точка
 {
 	TPoint rig(0,0);
-	for (int i = 1; i < HullSize; i++)
+	for (int i = 1; i <= HullSize; i++)
 		if  ( hull[i-1] > hull[i] )
 			rig = hull[i-1];
 		else
@@ -36,7 +34,7 @@ TPoint ConvexHull:: right () // сама€ права€ точка
 TPoint ConvexHull:: left () // сама€ лева€ точка
 {
 	TPoint lef(0,0);
-	for (int i = 1; i < HullSize; i++)
+	for (int i = 1; i <= HullSize; i++)
 		if  ( hull[i-1] < hull[i] )
 			lef = hull[i-1];
 		else
@@ -67,26 +65,51 @@ TPoint ConvexHull ::  remote ( TPoint A, TPoint B, ConvexHull h ) // сама€ удале
 	return maxpoint;
 }
 
-ConvexHull ConvexHull :: Split (TPoint A, TPoint B,  ConvexHull &above, ConvexHull &bellow) // –аспределение пространства h на подпростравнтсва abov и bellow
+void ConvexHull :: Split (TPoint A, TPoint B, SetPoints &above, SetPoints &bellow) // –аспределение пространства h на подпростравнтсва abov и bellow
 {
-	int temp=0;
-	int j=0;
-	ConvexHull abv ( HullSize );
-	ConvexHull bel ( HullSize );
-	for ( int i=0; i < HullSize; )
+	double temp=0;
+	int i=0,j=0,k=0;
+	for ( ; i < HullSize; i++ )
 		{
 			temp = A.CheckPoint( A, hull[i], B); // ћестоположение h[i] относительно AB
-			if ( temp >= 0 ) abv[i++] = hull[i];
-			else  abv[j++] = hull[i]; 
+			if ( temp >= 0 ) above[k++] = hull[i];
+			else  bellow[j++] = hull[i]; 
+	
 	    }
-	return 0;
 }
 
 
-TPoint ConvexHull :: QiuckHull()
+ConvexHull ConvexHull :: QiuckHull(SetPoints &h, TPoint leftpoint, TPoint rightpoint)
 {
-	return 0;
+	int i =0;
+	SetPoints s(0);
+	ConvexHull res(s);
+
+
+	TPoint lef, rig,rem;
+	SetPoints abov(0), bel(0);
+	lef = leftpoint;
+	rig = rightpoint;
+	
+	rem = remote(lef,rig,h);
+	
+	lef = lef;
+	rig = rem;
+	Split( lef, rem, abov, bel);
+	while ( i != bel.Size )
+		res[i++] = bel[i];
+	QiuckHull (abov, lef, rig );
+	
+	lef = rem;
+	rig = rig;
+	Split( lef, rem, abov, bel);
+	while ( i != bel.Size )
+		res[i++] = bel[i];
+	QiuckHull (abov, lef, rig );
+	return *this;
 }
+
+
 
 
 

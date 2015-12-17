@@ -1,6 +1,5 @@
-# include "set_points.h"
+#include "set_points.h"
 
-using namespace std;
 
 class ConvexHull  
 {
@@ -8,17 +7,16 @@ class ConvexHull
 	int HullSize;
 public:
 
-	ConvexHull (int _HullSize ); 
+	ConvexHull (SetPoints &a); 
 	ConvexHull ( const ConvexHull &h);
 	TPoint operator[] (int i);
-
 	TPoint left (); // нахождение самой левой точки
 	TPoint right(); // нахождение самой правой точки
 	TPoint remote ( TPoint , TPoint , ConvexHull h); // наиболее удаленная точка от прямой l
 
-	ConvexHull Split (TPoint A, TPoint B, ConvexHull &above, ConvexHull &bellow);
+	void Split (TPoint A, TPoint B, SetPoints &above, SetPoints &bellow);
 
-	TPoint QiuckHull(); 
+	ConvexHull QiuckHull(SetPoints &h, TPoint leftpoint, TPoint rightpoint  ); 
 
 };
 

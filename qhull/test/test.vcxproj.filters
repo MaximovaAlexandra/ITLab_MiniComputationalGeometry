@@ -21,6 +21,9 @@
     <ClCompile Include="test-QH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test-point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\qhull\qh.h">

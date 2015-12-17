@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="test-main.cpp" />
     <ClCompile Include="test-QH.cpp" />
+    <ClCompile Include="test-point.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\qhull\qhull.vcxproj">
